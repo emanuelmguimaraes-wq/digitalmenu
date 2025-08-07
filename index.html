@@ -2,64 +2,86 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Menu Digital</title>
   <style>
     html, body {
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       background: #000;
-      display: flex; justify-content: center; align-items: center;
-      height: 100dvh; overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
       font-family: sans-serif;
     }
 
     #flipbook {
-      width: 800px; max-width: 100vw;
-      max-height: 100dvh; height: auto;
+      width: 800px;
+      max-width: 100vw;
+      height: auto;
+      max-height: 100vh;
+    }
+
+    #flipbook .page {
+      width: 800px;
+      height: auto;
     }
 
     .page img {
-      width: 100%; height: auto; display: block;
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
     }
 
     .zone {
-      position: fixed;
-      top: 0; width: 50%; height: 100dvh;
-      z-index: 10;
+      position: absolute;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      z-index: 999;
       touch-action: manipulation;
     }
 
     .left-zone {
       left: 0;
-      cursor: url('data:image/svg+xml;utf8,<svg fill="black" opacity="0.9" xmlns="http://www.w3.org/2000/svg" height="48" width="48"><text x="8" y="32" font-size="32">❮</text></svg>') 16 16, auto;
+      cursor: url('data:image/svg+xml;utf8,<svg fill="black" opacity="0.4" xmlns="http://www.w3.org/2000/svg" height="48" width="48"><text x="8" y="32" font-size="32">❮</text></svg>') 16 16, auto;
     }
 
     .right-zone {
       right: 0;
-      cursor: url('data:image/svg+xml;utf8,<svg fill="black" opacity="0.9" xmlns="http://www.w3.org/2000/svg" height="48" width="48"><text x="8" y="32" font-size="32">❯</text></svg>') 16 16, auto;
+      cursor: url('data:image/svg+xml;utf8,<svg fill="black" opacity="0.4" xmlns="http://www.w3.org/2000/svg" height="48" width="48"><text x="8" y="32" font-size="32">❯</text></svg>') 16 16, auto;
     }
 
     .arrow {
-      position: fixed;
+      position: absolute;
       top: 50%;
       transform: translateY(-50%);
       font-size: 48px;
       color: black;
       opacity: 0;
       pointer-events: none;
-      z-index: 5;
     }
 
-    .left-arrow { left: 20px; }
-    .right-arrow { right: 20px; }
+    .left-arrow {
+      left: 20px;
+    }
+
+    .right-arrow {
+      right: 20px;
+    }
 
     .zone:hover ~ .left-arrow,
     .zone:hover ~ .right-arrow {
-      opacity: 0.9;
+      opacity: 0.4;
     }
 
     @media (hover: none) {
-      .arrow { opacity: 0.9; }
+      .arrow {
+        opacity: 0.4;
+      }
     }
   </style>
 </head>
@@ -86,19 +108,13 @@
     $(document).ready(function () {
       $('#flipbook').turn({
         width: 800,
-        height: window.innerHeight,
+        height: $(window).height(),
         autoCenter: true,
         display: 'single'
       });
 
-      $(window).on('resize orientationchange', function () {
-        $('#flipbook').turn('size', 800, window.innerHeight);
-      });
-
-      $('.zone').on('click', function () {
-        setTimeout(function () {
-          $('#flipbook').turn('display');
-        }, 50);
+      $(window).on('resize', function () {
+        $('#flipbook').turn('size', 800, $(window).height());
       });
     });
   </script>
